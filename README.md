@@ -1,0 +1,1 @@
+# obsididan-rag-plugin
