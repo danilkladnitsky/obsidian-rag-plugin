@@ -144,10 +144,12 @@
       }
     ],
     "direction": "horizontal",
-    "width": 457.5
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
+      "sample-plugin:Obsidian Rag Plugin": false,
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
@@ -156,7 +158,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "05adeee5c57f235b",
+  "active": "0c220d5449f38989",
   "lastOpenFiles": [
     "Welcome.md"
   ]

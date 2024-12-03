@@ -1,0 +1,10 @@
+.page {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.description {
+    margin-bottom: 16px;
+}

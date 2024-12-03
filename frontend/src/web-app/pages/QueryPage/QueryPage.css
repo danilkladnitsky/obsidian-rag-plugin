@@ -1,0 +1,26 @@
+.query {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    margin-bottom: 16px;
+}
+
+.query-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.skeleton {
+    height: 62px;
+}

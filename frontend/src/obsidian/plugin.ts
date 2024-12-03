@@ -1,7 +1,7 @@
-import { App, Modal, Plugin } from "obsidian"
+import { App, Modal } from "obsidian"
 import { createRoot, Root } from "react-dom/client"
 
-import { IObsidianRagPlugin, RenderUIFn } from "./types"
+import { RenderUIFn } from "./types"
 
 export class UIModal extends Modal {
     private root: Root | null = null
@@ -28,35 +28,5 @@ export class UIModal extends Modal {
             this.root = null
         }
         this.contentEl.empty()
-    }
-}
-
-export class ObsidianPlugin extends Plugin implements IObsidianRagPlugin {
-    renderUIFn: RenderUIFn
-
-    init(renderUIFn: RenderUIFn): void {
-        this.renderUIFn = renderUIFn
-    }
-
-    getUIModal(): UIModal {
-        return new UIModal(this.app, this.renderUIFn)
-    }
-
-    static setUIRenderFn(renderUIFn: RenderUIFn) {
-        this.prototype.renderUIFn = renderUIFn
-    }
-
-    async onload() {
-        this.addRibbonIcon("dice", "Open Modal", () => {
-            this.getUIModal().open()
-        })
-
-        this.addCommand({
-            id: "display-modal",
-            name: "Display Modal",
-            callback: () => {
-                this.getUIModal().open()
-            }
-        })
     }
 }

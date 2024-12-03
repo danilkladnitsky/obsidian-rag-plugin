@@ -5,24 +5,32 @@
 	"main": "main.js",
 	"type": "module",
 	"scripts": {
+		"web": "vite",
 		"dev": "node esbuild.config.mjs",
 		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
 		"version": "node version-bump.mjs && git add manifest.json versions.json",
-		"setup-node": "source ~/.nvm/nvm.sh && nvm use $(cat .nvmrc) && node --version"
+		"setup-node": "source ~/.nvm/nvm.sh && nvm use $(cat .nvmrc) && node --version",
+		"lint": "eslint src --fix"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "MIT",
 	"devDependencies": {
 		"@eslint/js": "^9.15.0",
+		"@gravity-ui/uikit": "^6.37.0",
 		"@stylistic/eslint-plugin": "^2.11.0",
 		"@types/node": "^16.11.6",
 		"@types/react": "^18.3.12",
 		"@types/react-dom": "^18.3.1",
 		"@typescript-eslint/eslint-plugin": "5.29.0",
 		"@typescript-eslint/parser": "5.29.0",
+		"@vitejs/plugin-react-swc": "^3.7.2",
+		"axios": "^1.7.8",
 		"builtin-modules": "3.3.0",
 		"esbuild": "0.17.3",
+		"esbuild-css-modules-plugin": "^3.1.2",
+		"esbuild-plugin-css-modules": "^0.3.0",
+		"eslint": "^9.16.0",
 		"eslint-import-resolver-typescript": "^3.6.3",
 		"eslint-plugin-import": "^2.31.0",
 		"eslint-plugin-jsx-a11y": "^6.10.2",
@@ -30,15 +38,14 @@
 		"eslint-plugin-react-hooks": "^5.0.0",
 		"eslint-plugin-react-refresh": "^0.4.14",
 		"obsidian": "latest",
-		"postcss": "^8.4.49",
-		"postcss-preset-mantine": "^1.17.0",
-		"postcss-simple-vars": "^7.0.1",
 		"tslib": "2.4.0",
 		"typescript": "4.7.4",
-		"typescript-eslint": "^8.16.0"
+		"typescript-eslint": "^8.16.0",
+		"vite": "^6.0.2"
 	},
 	"dependencies": {
 		"react": "^18.3.1",
-		"react-dom": "^18.3.1"
+		"react-dom": "^18.3.1",
+		"react-router-dom": "^7.0.2"
 	}
 }
