@@ -4,10 +4,7 @@ export type UserNote = {
     content: string
 }
 
-export type Suggestion = {
-    noteUrl: string
-    textContent: string
-}
+export type Suggestion = string
 
 export type QueryRequest = {
     question: string

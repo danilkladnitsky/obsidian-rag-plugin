@@ -4,17 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "ead7ca24426e4829",
+        "id": "c67aa68083a519f1",
         "type": "tabs",
         "children": [
           {
-            "id": "efccd46d2b044abb",
+            "id": "fb46996b9322fcd9",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Почти джун почти с 0/1 занятие/Немодальный вопрос – Что это такое вообще.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Немодальный вопрос – Что это такое вообще"
             }
           }
         ]
@@ -73,7 +77,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 348.5
   },
   "right": {
     "id": "b0d2b5b9fd2f23fe",
@@ -158,8 +162,13 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "0c220d5449f38989",
+  "active": "fb46996b9322fcd9",
   "lastOpenFiles": [
+    "Почти джун почти с 0/1 занятие/Интерфейсные тексты в коде - требования по локализации.md",
+    "Почти джун почти с 0/1 занятие/НСтр() - новая строка.md",
+    "Почти джун почти с 0/1 занятие/1С. ОписаниеОповещения.md",
+    "Разработка интерфейса прикладных решений/3 часть/Глава 3.18. Работа с файлами и картинками.md",
+    "Печатные формы/Изображения/Pasted image 20241127185201.png",
     "Welcome.md"
   ]
 }

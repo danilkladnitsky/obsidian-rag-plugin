@@ -1,11 +1,9 @@
 import { Card, Link, Text } from "@gravity-ui/uikit"
 
-import { Suggestion } from "web-app/domain"
-
 import "./QueryResult.css"
 
 interface Props {
-    suggestion: Suggestion
+    suggestion: string
 }
 
 export const QueryResult = ({ suggestion }: Props) => {
@@ -13,11 +11,11 @@ export const QueryResult = ({ suggestion }: Props) => {
         <Card theme="success" className="result">
             <Text variant="code-1">
                 <Link href="#">
-                    {suggestion.noteUrl}
+                    Нет ссылки
                 </Link>
             </Text>
             <Text className="output" variant="body-1" ellipsis ellipsisLines={2}>
-                {suggestion.textContent}
+                {suggestion}
             </Text>
         </Card>
     )

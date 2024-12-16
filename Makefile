@@ -16,3 +16,9 @@ move-plugin:
 	cp frontend/manifest.json $(PLUGIN_PATH)
 
 update-plugin: setup-node build-plugin reset-plugin move-plugin
+
+setup-backend:
+	cd backend && pip3 install -r requirements.txt
+
+run-backend:
+	cd backend && python3.10 src/app.py

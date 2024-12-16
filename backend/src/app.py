@@ -5,8 +5,22 @@ from typing import List
 from langchain.vectorstores import FAISS
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.schema import Document
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:5173",
+    "*"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # TODO: remove hardcode
@@ -65,6 +79,9 @@ async def get_user_notes_suggestions(query: str = Query(..., description="Зап
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Ошибка при извлечении чанков: {str(e)}")
 
+@app.get("/ping")
+async def ping():
+    return "pong"
 
 if __name__ == "__main__":
     import uvicorn
