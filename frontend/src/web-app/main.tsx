@@ -19,7 +19,6 @@ const mockObsidianApp: Partial<IObsidianApp> = {
                 name: "01.md"
             }]
         }
-
     }
 }
 

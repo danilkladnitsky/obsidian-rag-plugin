@@ -31,7 +31,8 @@ export const AppContextProvider = ({ children, obsidianApp, api }: AppContextPro
     }
 
     const saveNotes = async (notes: UserNote[]) => {
-        await api.saveNotes(notes)
+        const vaultName = obsidianApp.vault.getName()
+        await api.saveNotes(vaultName, notes)
     }
 
     return (

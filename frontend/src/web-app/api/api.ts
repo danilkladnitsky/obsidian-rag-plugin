@@ -14,7 +14,7 @@ type QueryResponse = {
 }
 
 export interface IAppApi {
-    saveNotes: (notes: UserNote[]) => Promise<void>
+    saveNotes: (vaultName: string, notes: UserNote[]) => Promise<void>
     query: (query: QueryRequest) => Promise<string[]>
 }
 
@@ -24,14 +24,14 @@ export const MockAppApi: IAppApi = {
 }
 
 export const Api: IAppApi = {
-    saveNotes: async (notes: UserNote[]) => {
+    saveNotes: async (vaultName: string, notes: UserNote[]) => {
         const response = await fetch(`${BACKEND_URL}/user-notes`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                user_id: "userId",
+                user_id: vaultName,
                 documents: notes.map(n => n.content)
             })
         })
