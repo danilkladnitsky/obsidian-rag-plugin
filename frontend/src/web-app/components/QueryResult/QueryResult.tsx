@@ -1,6 +1,7 @@
 import { Card, Link, Text } from "@gravity-ui/uikit"
 
 import { Suggestion } from "web-app/domain"
+
 import "./QueryResult.css"
 
 interface Props {
