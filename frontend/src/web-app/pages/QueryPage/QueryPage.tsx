@@ -25,7 +25,7 @@ export const QueryPage = () => {
                 <TextArea onChange={e => setQuestion(e.target.value)} value={question} size="xl" hasClear minRows={2} maxRows={8} />
                 <Button disabled={!question} width="max" size="l" loading={isLoading} onClick={handleQuery}>Отправить</Button>
             </Box>
-            {suggestions.length && <Text variant="subheader-2">Результаты:</Text>}
+            {suggestions.length > 0 && <Text variant="subheader-2">Результаты:</Text>}
             <Box className="query-list">
                 {
                     isLoading

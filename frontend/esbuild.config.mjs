@@ -1,8 +1,9 @@
-import fs from "node:fs";
-import process from "process";
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+import fs from "node:fs"
+import process from "process"
 
-import builtins from "builtin-modules";
-import esbuild from "esbuild";
+import builtins from "builtin-modules"
+import esbuild from "esbuild"
 
 const banner
 = `/*
@@ -38,7 +39,7 @@ const context = await esbuild.context({
     banner: {
         js: banner
     },
-    entryPoints: ["src/main.ts"],
+    entryPoints: ["src/plugin.ts"],
     bundle: true,
     external: [
         "obsidian",
