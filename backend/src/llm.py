@@ -4,12 +4,10 @@ from typing import List
 
 from openai import OpenAI
 
-
 logger = logging.getLogger(__name__)
 
 
 class LLM:
-
     def __init__(self, config):
         self.model = config["llm"]["model"]
         self.prompt = config["llm"]["system_prompt"]
@@ -38,7 +36,7 @@ class LLM:
                 temperature=self.temperature,
                 top_p=self.top_p,
                 max_tokens=self.max_tokens,
-                stream=True
+                stream=True,
             )
 
             generated_response = ""

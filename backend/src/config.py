@@ -1,4 +1,5 @@
 import os
+
 import yaml
 
 
@@ -8,4 +9,3 @@ def get_config():
         config = yaml.safe_load(file)
 
     return config
-
