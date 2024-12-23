@@ -7,7 +7,7 @@ import { useAppContext } from "../../context/AppContext.context"
 import "./QueryPage.css"
 
 export const QueryPage = () => {
-    const { suggestions, getSuggestions } = useAppContext()
+    const { suggestions, questionAnswer, getSuggestions } = useAppContext()
     const [question, setQuestion] = useState("")
     const [isLoading, setIsLoading] = useState(false)
 
@@ -25,7 +25,15 @@ export const QueryPage = () => {
                 <TextArea onChange={e => setQuestion(e.target.value)} value={question} size="xl" hasClear minRows={2} maxRows={8} />
                 <Button disabled={!question} width="max" size="l" loading={isLoading} onClick={handleQuery}>Отправить</Button>
             </Box>
-            {suggestions.length > 0 && <Text variant="subheader-2">Результаты:</Text>}
+            {questionAnswer && (
+                <Box>
+                    <Text variant="subheader-2">Ответ: </Text>
+                    <Text variant="body-2">
+                        {questionAnswer}
+                    </Text>
+                </Box>
+            )}
+            {suggestions.length > 0 && <Text variant="subheader-2">Источники:</Text>}
             <Box className="query-list">
                 {
                     isLoading

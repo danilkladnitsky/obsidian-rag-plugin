@@ -11,16 +11,20 @@ type ApiResponse = {
 
 type QueryResponse = {
     suggestions: string[]
+    llm_output: string
 }
 
 export interface IAppApi {
     saveNotes: (vaultName: string, notes: UserNote[]) => Promise<void>
-    query: (query: QueryRequest) => Promise<string[]>
+    query: (query: QueryRequest) => Promise<QueryResponse>
 }
 
 export const MockAppApi: IAppApi = {
     saveNotes: () => wait(2500),
-    query: () => wait(1500).then(() => Promise.resolve(["Lorem ipsum"]))
+    query: () => wait(1500).then(() => Promise.resolve({
+        suggestions: ["Lorem ipsum"],
+        llm_output: "Lorem ipsum"
+    }))
 }
 
 export const Api: IAppApi = {
@@ -38,16 +42,18 @@ export const Api: IAppApi = {
 
         await response.json() as Promise<ApiResponse>
     },
-    query: async ({ question }: QueryRequest) => {
-        const response = await fetch(`${BACKEND_URL}/user-notes/suggestion?query=${question}`, {
-            method: "GET",
+    query: async ({ question, user_id }: QueryRequest) => {
+        const response = await fetch(`${BACKEND_URL}/user-notes/suggestion`, {
+            method: "POST",
             headers: {
                 "Content-Type": "application/json"
-            }
+            },
+            body: JSON.stringify({
+                user_id,
+                query: question
+            })
         })
 
-        const res = (await response.json()) as QueryResponse
-
-        return res.suggestions
+        return await response.json()
     }
 }

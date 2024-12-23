@@ -13,6 +13,7 @@ interface AppContextProps {
 interface IAppContextState {
     obsidianApp: App
     suggestions: Suggestion[]
+    questionAnswer: string
     getSuggestions: (question: string) => Promise<void>
     saveNotes: (notes: UserNote[]) => Promise<void>
 }
@@ -23,11 +24,13 @@ export const useAppContext = () => useContext(AppContext) as IAppContextState
 
 export const AppContextProvider = ({ children, obsidianApp, api }: AppContextProps) => {
     const [suggestions, setSuggestions] = useState<Suggestion[]>([])
+    const [questionAnswer, setQuestionAnswer] = useState("")
 
     const getSuggestions = async (question: string) => {
         setSuggestions([])
-        const suggestions = await api.query({ question })
+        const { suggestions, llm_output } = await api.query({ question, user_id: obsidianApp.vault.getName() })
         setSuggestions(suggestions)
+        setQuestionAnswer(llm_output)
     }
 
     const saveNotes = async (notes: UserNote[]) => {
@@ -36,7 +39,7 @@ export const AppContextProvider = ({ children, obsidianApp, api }: AppContextPro
     }
 
     return (
-        <AppContext.Provider value={{ obsidianApp, suggestions, getSuggestions, saveNotes }}>
+        <AppContext.Provider value={{ obsidianApp, suggestions, questionAnswer, getSuggestions, saveNotes }}>
             {children}
         </AppContext.Provider>
 

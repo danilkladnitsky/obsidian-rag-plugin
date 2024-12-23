@@ -22,15 +22,21 @@ def get_app(config):
     @app.post("/user-notes")
     async def add_user_notes(input_data: UserNotesInput):
         try:
+            print(input_data.documents)
+            print(len(input_data.documents))
             user_notes_store.add_documents(input_data.user_id, input_data.documents)
             return {"status": "success"}
         except Exception as e:
-            raise HTTPException(status_code=500, detail=f"Ошибка при добавлении документов: {str(e)}")
+            raise HTTPException(
+                status_code=500, detail=f"Ошибка при добавлении документов: {str(e)}"
+            )
 
-    @app.get("/user-notes/suggestion")
+    @app.post("/user-notes/suggestion")
     async def get_user_notes_suggestions(input_data: UserQueryInput):
         try:
-            docs = user_notes_store.retrieve_chunks(input_data.user_id, input_data.query)
+            docs = user_notes_store.retrieve_chunks(
+                input_data.user_id, input_data.query
+            )
             chunks = [chunk.page_content for chunk in docs]
             llm_output = llm.get_output(chunks, input_data.query)
 
@@ -38,7 +44,9 @@ def get_app(config):
         except ValueError as e:
             raise HTTPException(status_code=400, detail=str(e))
         except Exception as e:
-            raise HTTPException(status_code=500, detail=f"Ошибка при извлечении чанков: {str(e)}")
+            raise HTTPException(
+                status_code=500, detail=f"Ошибка при извлечении чанков: {str(e)}"
+            )
 
     @app.get("/ping")
     async def ping():
