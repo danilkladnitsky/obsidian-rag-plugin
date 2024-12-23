@@ -5,6 +5,8 @@ from .api_model import UserNotesInput, UserQueryInput
 from .llm import LLM
 from .user_notes_store import UserNotesStore
 
+from utils.py import clean_markdown
+
 
 def get_app(config):
     llm = LLM(config)
@@ -22,7 +24,8 @@ def get_app(config):
     @app.post("/user-notes")
     async def add_user_notes(input_data: UserNotesInput):
         try:
-            user_notes_store.add_documents(input_data.user_id, input_data.documents)
+            cleaned_documents = [clean_markdown(doc) for doc in input_data.documents]
+            user_notes_store.add_documents(input_data.user_id, cleaned_documents)
             return {"status": "success"}
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Ошибка при добавлении документов: {str(e)}")
