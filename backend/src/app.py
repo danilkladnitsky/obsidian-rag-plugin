@@ -22,8 +22,6 @@ def get_app(config):
     @app.post("/user-notes")
     async def add_user_notes(input_data: UserNotesInput):
         try:
-            print(input_data.documents)
-            print(len(input_data.documents))
             user_notes_store.add_documents(input_data.user_id, input_data.documents)
             return {"status": "success"}
         except Exception as e:
