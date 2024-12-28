@@ -28,7 +28,6 @@ export default [
             }
         }
     },
-    ...tsEslint.configs.recommended,
     pluginImport.flatConfigs.recommended,
     { files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"] },
     {
@@ -42,6 +41,7 @@ export default [
     },
     pluginJs.configs.recommended,
     pluginReact.configs.flat.recommended,
+    ...tsEslint.configs.recommended,
     stylistic.configs["disable-legacy"],
     stylistic.configs.customize({
         indent: 4,

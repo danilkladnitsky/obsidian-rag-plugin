@@ -7,7 +7,7 @@ import { App } from "./App"
 
 const mockObsidianApp: Partial<IObsidianApp> = {
     vault: {
-        read(file) {
+        read() {
             return "Lorem ipsum dolor sit"
         },
         getName() {

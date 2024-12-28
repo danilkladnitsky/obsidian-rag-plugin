@@ -1,7 +1,8 @@
 import { App, Modal } from "obsidian"
+import React from "react"
 import { createRoot, Root } from "react-dom/client"
 
-import { ReactApp } from "../../web-app/ReactApp"
+import { App as ReactApp } from "web-app/App"
 
 export class PluginModal extends Modal {
     private root: Root | null = null

@@ -13,14 +13,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+  check-frontend:
+    name: Lint frontend code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup node
+        uses: actions/setup-node@v3
+
+      - name: Install dependencies
+        run: cd frontend && npm install --legacy-peer-deps
+
+      - name: Lint code
+        run: cd frontend && npm run lint
+
+
   build-frontend:
-    needs: setup
+    needs: [setup, check-frontend]
     name: Build web interface
     runs-on: self-hosted
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
       - name: Stop service
         run: docker compose -f docker-compose.frontend.yml down
 
@@ -35,9 +46,6 @@ jobs:
     name: Build backend service
     runs-on: self-hosted
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
       - name: Stop service
         run: docker compose -f docker-compose.backend.yml down
 
@@ -52,8 +60,8 @@ jobs:
     name: Compile plugin
     runs-on: self-hosted
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
 
       - name: Compile Obsidian plugin
         run: |
