@@ -61,10 +61,13 @@ jobs:
         run: docker compose -f docker-compose.backend.yml up --force-recreate -d
 
   compile-plugin:
-    needs: [setup, build-frontend]
+    needs: [check-frontend]
     name: Compile plugin
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Setup node
         uses: actions/setup-node@v3
 
