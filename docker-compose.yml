@@ -14,9 +14,11 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
-    command: python3 src/app.py
+    command: python3 main.py
     networks:
       - app-network
+    environment:
+      - LLM_API_KEY=${LLM_API_KEY}
 
 networks:
   app-network:

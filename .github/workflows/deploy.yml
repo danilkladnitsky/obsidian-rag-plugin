@@ -23,20 +23,27 @@ jobs:
         run: cd frontend && npm run lint
 
   build-service:
+    needs: [check-frontend]
     name: Build service
     runs-on: self-hosted
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      
+      - uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          file_name: .env
+          fail_on_empty: false
 
       - name: Stop service
-        run: docker compose -f docker-compose.yml down
+        run: docker compose -f docker-compose.yml --env-file .env down
 
       - name: Build service
-        run: docker compose -f docker-compose.yml build
+        run: docker compose -f docker-compose.yml --env-file .env build
 
       - name: Start service
-        run: docker compose -f docker-compose.yml up --force-recreate -d
+        run: docker compose -f docker-compose.yml --env-file .env up --force-recreate -d
 
   compile-plugin:
     needs: [check-frontend]
