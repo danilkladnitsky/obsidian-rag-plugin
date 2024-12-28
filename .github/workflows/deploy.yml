@@ -17,6 +17,9 @@ jobs:
     name: Lint frontend code
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Setup node
         uses: actions/setup-node@v3
 
@@ -26,12 +29,14 @@ jobs:
       - name: Lint code
         run: cd frontend && npm run lint
 
-
   build-frontend:
-    needs: [setup, check-frontend]
+    needs: [check-frontend]
     name: Build web interface
     runs-on: self-hosted
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
       - name: Stop service
         run: docker compose -f docker-compose.frontend.yml down
 
