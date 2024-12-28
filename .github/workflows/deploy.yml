@@ -7,7 +7,7 @@ on:
 
 jobs:
   setup:
-    name: Build app
+    name: Download repository
     runs-on: self-hosted
     steps:
       - name: Checkout code
@@ -15,7 +15,7 @@ jobs:
 
   build-frontend:
     needs: setup
-    name: Build app
+    name: Build web interface
     runs-on: self-hosted
     steps:
       - name: Checkout code
@@ -32,7 +32,7 @@ jobs:
 
   build-backend:
     needs: setup
-    name: Build app
+    name: Build backend service
     runs-on: self-hosted
     steps:
       - name: Checkout code
