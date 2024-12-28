@@ -6,7 +6,15 @@ on:
       - main
 
 jobs:
-  build:
+  setup:
+    name: Build app
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+  build-frontend:
+    needs: setup
     name: Build app
     runs-on: self-hosted
     steps:
@@ -14,10 +22,46 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Stop service
-        run: docker compose -f docker-compose.yml down
+        run: docker compose -f docker-compose.frontend.yml down
 
       - name: Build service
-        run: docker compose -f docker-compose.yml build
+        run: docker compose -f docker-compose.frontend.yml build
 
       - name: Start service
-        run: docker compose -f docker-compose.yml up --force-recreate -d
+        run: docker compose -f docker-compose.frontend.yml up --force-recreate -d
+
+  build-backend:
+    needs: setup
+    name: Build app
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Stop service
+        run: docker compose -f docker-compose.backend.yml down
+
+      - name: Build service
+        run: docker compose -f docker-compose.backend.yml build
+
+      - name: Start service
+        run: docker compose -f docker-compose.backend.yml up --force-recreate -d
+
+  compile-plugin:
+    needs: [setup, build-frontend]
+    name: Compile plugin
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Compile Obsidian plugin
+        run: |
+          cd frontend
+          npm run build
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: obsidian-plugin
+          path: frontend/dist
