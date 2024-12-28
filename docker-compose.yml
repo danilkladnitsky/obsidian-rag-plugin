@@ -14,7 +14,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
-    command: python3 backend/src/app.py
+    command: python3 src/app.py
     networks:
       - app-network
 
