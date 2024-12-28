@@ -1,0 +1,14 @@
+name: Clear server
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  build:
+    name: Clear server space
+    runs-on: self-hosted
+    steps:
+      - name: Docker Prune
+        run: docker system prune -a -f
