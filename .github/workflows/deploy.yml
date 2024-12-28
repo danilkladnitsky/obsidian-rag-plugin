@@ -22,38 +22,21 @@ jobs:
       - name: Lint code
         run: cd frontend && npm run lint
 
-  build-frontend:
-    needs: [check-frontend]
-    name: Build web interface
-    runs-on: self-hosted
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        
-      - name: Stop service
-        run: docker compose -f docker-compose.frontend.yml down
-
-      - name: Build service
-        run: docker compose -f docker-compose.frontend.yml build
-
-      - name: Start service
-        run: docker compose -f docker-compose.frontend.yml up --force-recreate -d
-
-  build-backend:
-    name: Build backend service
+  build-service:
+    name: Build service
     runs-on: self-hosted
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Stop service
-        run: docker compose -f docker-compose.backend.yml down
+        run: docker compose -f docker-compose.yml down
 
       - name: Build service
-        run: docker compose -f docker-compose.backend.yml build
+        run: docker compose -f docker-compose.yml build
 
       - name: Start service
-        run: docker compose -f docker-compose.backend.yml up --force-recreate -d
+        run: docker compose -f docker-compose.yml up --force-recreate -d
 
   compile-plugin:
     needs: [check-frontend]

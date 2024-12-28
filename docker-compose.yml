@@ -1,0 +1,23 @@
+services:
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+      - "82:8082"
+    networks:
+      - app-network
+  
+  backend:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    command: python3 backend/src/app.py
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
