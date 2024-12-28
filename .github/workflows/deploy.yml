@@ -6,13 +6,6 @@ on:
       - main
 
 jobs:
-  setup:
-    name: Download repository
-    runs-on: self-hosted
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
   check-frontend:
     name: Lint frontend code
     runs-on: ubuntu-latest
@@ -47,10 +40,12 @@ jobs:
         run: docker compose -f docker-compose.frontend.yml up --force-recreate -d
 
   build-backend:
-    needs: setup
     name: Build backend service
     runs-on: self-hosted
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Stop service
         run: docker compose -f docker-compose.backend.yml down
 
@@ -70,6 +65,9 @@ jobs:
 
       - name: Setup node
         uses: actions/setup-node@v3
+
+      - name: Install dependencies
+        run: cd frontend && npm install --legacy-peer-deps
 
       - name: Compile Obsidian plugin
         run: |
