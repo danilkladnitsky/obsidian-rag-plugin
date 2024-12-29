@@ -27,6 +27,7 @@ user_notes_store:
 
 llm:
   api_key: "LLM_API_KEY"
+  base_url: "https://api.aitunnel.ru/v1/"
   model: "gpt-4o-mini"
   role: "user"
   system_prompt: |

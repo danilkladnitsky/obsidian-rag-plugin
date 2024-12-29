@@ -14,7 +14,10 @@ class LLM:
         self.temperature = config["llm"]["temperature"]
         self.top_p = config["llm"]["top_p"]
         self.max_tokens = config["llm"]["max_tokens"]
-        self.llm_client = OpenAI(api_key=os.environ[config["llm"]["api_key"]])
+        self.llm_client = OpenAI(
+            base_url=config["llm"]["base_url"],
+            api_key=os.environ[config["llm"]["api_key"]],
+        )
 
     @staticmethod
     def build_prompt(chunks: List[str], query: str) -> str:
