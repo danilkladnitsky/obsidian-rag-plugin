@@ -171,3 +171,9 @@ cython_debug/
 
 
 obsidian-vaults/sample-vault/.obsidian/*
+obsidian-vaults/sample-vault/.obsidian/app.json
+obsidian-vaults/sample-vault/.obsidian/appearance.json
+obsidian-vaults/sample-vault/.obsidian/workspace.json
+obsidian-vaults/sample-vault/.obsidian/core-plugins.json
+obsidian-vaults/sample-vault/.obsidian/community-plugins.json
+obsidian-vaults/sample-vault/.obsidian/plugins/plugin/*

@@ -1,6 +1,15 @@
 import { QueryRequest, UserNote } from "web-app/domain"
 
-const BACKEND_URL = import.meta.env.PROD ? "/api" : "http://0.0.0.0:8000"
+const getProd = () => {
+    try {
+        return import.meta.env.PROD
+    }
+    catch (err) {
+        return true
+    }
+}
+
+const BACKEND_URL = getProd() ? "https://llm-course-2024.kladnitsky.ru/api" : "http://0.0.0.0:8000"
 
 const wait = (ms: number): Promise<void> => new Promise(r => setTimeout(r, ms))
 

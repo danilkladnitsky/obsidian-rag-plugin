@@ -2,7 +2,7 @@ import { App, Modal } from "obsidian"
 import React from "react"
 import { createRoot, Root } from "react-dom/client"
 
-import { App as ReactApp } from "web-app/App"
+import { App as ReactApp } from "../../web-app/App"
 
 export class PluginModal extends Modal {
     private root: Root | null = null
@@ -19,7 +19,7 @@ export class PluginModal extends Modal {
         contentEl.appendChild(container)
 
         this.root = createRoot(container)
-        this.root.render(<ReactApp obsididanApp={this.app} />)
+        this.root.render(<ReactApp obsidianApp={this.app} />)
     }
 
     onClose() {
