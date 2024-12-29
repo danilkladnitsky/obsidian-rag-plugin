@@ -5,6 +5,7 @@ const getProd = () => {
         return import.meta.env.PROD
     }
     catch (err) {
+        console.error(err)
         return true
     }
 }
