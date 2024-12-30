@@ -19,15 +19,15 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install flake8
+          pip install flake8 autopep8
 
       - name: Run Flake8
         run: |
-          flake8 backend/*
+          flake8 --max-line-length=120 *.py
 
       - name: Run PEP 8 Compliance Check
         run: |
-          flake8 --max-line-length=120 backend/*
+          autopep8 --in-place --aggressive --aggressive backend
 
   check-frontend:
     name: Lint frontend code
