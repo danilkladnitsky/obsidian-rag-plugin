@@ -34,3 +34,10 @@ class LLM:
 
 ```
 Следуйте шагам 2-4 в кейсе с AI TUNNEL
+
+## Авторы
+Данил Кладницкий (tg: @danilkladnitsky)
+
+Аверченко Марк Алексеевич (tg: @marcenavuc)
+
+Бондарчук Анастасия Ивановна (tg: @Spirit_Green)

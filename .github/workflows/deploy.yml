@@ -71,13 +71,13 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: obsidian-rag-plugin
-          path: frontend/plugin
+          path: frontend/dist/plugin
 
       - name: Release Obsidian plugin
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            frontend/plugin/obsidian-rag-plugin.zip
+            frontend/dist/plugin
           tag_name: v${{ github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
