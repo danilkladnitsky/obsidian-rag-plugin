@@ -36,7 +36,7 @@ jobs:
 
   build-service:
     needs: [check-frontend, check-backend]
-    name: Build service
+    name: Build web service
     runs-on: self-hosted
     steps:
       - name: Checkout code
@@ -58,7 +58,7 @@ jobs:
         run: docker compose -f docker-compose.yml --env-file .env up --force-recreate -d
 
   compile-plugin:
-    needs: [check-frontend]
+    needs: [build-service]
     name: Compile plugin
     runs-on: ubuntu-latest
     permissions:
