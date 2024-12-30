@@ -1,4 +1,4 @@
-name: Deploy App
+name: Lint services
 
 on:
   pull_request:

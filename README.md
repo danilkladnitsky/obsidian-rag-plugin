@@ -17,7 +17,7 @@ https://github.com/danilkladnitsky/obsidian-rag-plugin/releases
 ### AI Tunnel
 https://aitunnel.ru/#models
 
-1. Подготовьте API-токен от AI TUNNEL
+1. Подготовьте API-токен от AI Tunnel
 2. Создайте файл .env в корне проекта
 ```bash
 LLM_API_KEY=<Ваш токен>
