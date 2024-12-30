@@ -24,7 +24,7 @@ LLM_API_KEY=<Ваш токен>
 ```
 3. Запустите проект через docker
 ```bash
-docker compose up --env-file .env --build
+docker compose -f docker-compose.yml --env-file .env up --build
 ```
 4. Фронтенд будет запущен на 82 порту, бэкенд - на 8000
 
