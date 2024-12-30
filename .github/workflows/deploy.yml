@@ -67,17 +67,20 @@ jobs:
           cp manifest.json dist/plugin/obsidian-rag-plugin/manifest.json
           cp dist/main.js dist/plugin/obsidian-rag-plugin/main.js
 
+          cp -r frontend/dist/plugin artifact
+          tar -zcvf obsidian_plugin.tar.gz artifact
+
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: obsidian-rag-plugin
-          path: frontend/dist/plugin
+          path: artifact
 
       - name: Release Obsidian plugin
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            frontend/dist/plugin
+            obsidian_plugin.tar.gz
           tag_name: v${{ github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

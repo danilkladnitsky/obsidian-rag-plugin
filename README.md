@@ -1,4 +1,4 @@
-# obsididan-rag-plugin
+# Obsidian RAG Plugin (TBD Team)
 ## Demo Web App
 https://llm-course-2024.kladnitsky.ru/
 ## Obsidian Plugin
@@ -33,7 +33,7 @@ class LLM:
     # ...
 
 ```
-Следуйте шагам 2-4 в кейсе с AI TUNNEL
+3. Следуйте шагам 2-4 в кейсе с AI TUNNEL
 
 ## Авторы
 Данил Кладницкий (tg: @danilkladnitsky)
