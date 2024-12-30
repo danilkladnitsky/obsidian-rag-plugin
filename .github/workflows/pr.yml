@@ -27,7 +27,8 @@ jobs:
 
       - name: Run PEP 8 Compliance Check
         run: |
-          autopep8 --in-place --aggressive --aggressive backend/*
+          cd backend
+          autopep8 --in-place --aggressive --aggressive .
 
   check-frontend:
     name: Lint frontend code
