@@ -11,7 +11,8 @@
 		"build:web": "vite build",
 		"version": "node version-bump.mjs && git add manifest.json versions.json",
 		"setup-node": "source ~/.nvm/nvm.sh && nvm use $(cat .nvmrc) && node --version",
-		"lint": "eslint src --fix"
+		"lint": "eslint src",
+		"lint:fix": "eslint src --fix"
 	},
 	"keywords": [],
 	"author": "",
