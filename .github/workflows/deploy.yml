@@ -67,7 +67,7 @@ jobs:
           npm run build
 
           cp manifest.json dist/manifest.json
-          tar -cvf obsidian-rag-plugin.tar.gz dist/manifest.json dist/main.js dist/styles.css
+          tar -cvf obsidian-rag-plugin.tar.gz dist/manifest.json dist/main.js
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
