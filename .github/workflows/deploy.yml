@@ -6,6 +6,18 @@ on:
       - main
 
 jobs:
+  check-backend:
+    name: Lint backend code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: autopep8
+        uses: peter-evans/autopep8@v2
+        with:
+          args: --recursive --in-place --aggressive --aggressive .
+
   check-frontend:
     name: Lint frontend code
     runs-on: ubuntu-latest
@@ -23,7 +35,7 @@ jobs:
         run: cd frontend && npm run lint
 
   build-service:
-    needs: [check-frontend]
+    needs: [check-frontend, check-backend]
     name: Build service
     runs-on: self-hosted
     steps:
