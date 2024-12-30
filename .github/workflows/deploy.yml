@@ -80,9 +80,26 @@ jobs:
       - name: Lint code
         run: cd frontend && npm run lint
 
-  build-service:
-    needs: [check-frontend, check-backend]
+  build-frontend:
+    needs: [check-frontend]
     name: Build web service
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Stop service
+        run: docker compose -f docker-compose.yml down frontend
+
+      - name: Build service
+        run: docker compose -f docker-compose.yml build frontend
+
+      - name: Start service
+        run: docker compose -f docker-compose.yml up frontend --force-recreate -d
+
+  build-backend:
+    needs: [check-backend]
+    name: Build backend service
     runs-on: self-hosted
     steps:
       - name: Checkout code
@@ -95,13 +112,13 @@ jobs:
           fail_on_empty: false
 
       - name: Stop service
-        run: docker compose -f docker-compose.yml --env-file .env down
+        run: docker compose -f docker-compose.yml --env-file .env down backend
 
       - name: Build service
-        run: docker compose -f docker-compose.yml --env-file .env build
+        run: docker compose -f docker-compose.yml --env-file .env build backend
 
       - name: Start service
-        run: docker compose -f docker-compose.yml --env-file .env up --force-recreate -d
+        run: docker compose -f docker-compose.yml --env-file .env up backend --force-recreate -d
 
   compile-plugin:
     needs: [check-frontend]
