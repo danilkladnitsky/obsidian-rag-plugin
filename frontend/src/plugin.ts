@@ -40,6 +40,6 @@ export default class MyPlugin extends Plugin {
             new UIModal(this.app, RenderAppFn).open()
         })
         // Perform additional things with the ribbon
-                 ribbonIconEl.addClass("my-plugin-ribbon-class")
+        ribbonIconEl.addClass("my-plugin-ribbon-class")
     }
 }
