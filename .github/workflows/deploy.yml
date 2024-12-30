@@ -64,23 +64,22 @@ jobs:
           cd frontend
           npm run build
 
-          ls
+          cp manifest.json dist/manifest.json
 
-          cp manifest.json frontend/dist
-
-          tar -zcvf obsidian_plugin.tar.gz frontend/dist
+          tar -zcvf obsidian_plugin.tar.gz dist
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: obsidian-rag-plugin
-          path: obsidian_plugin.tar.gz
+          path: frontend/obsidian_plugin.tar.gz
 
       - name: Release Obsidian plugin
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            obsidian_plugin.tar.gz
+            frontend/obsidian_plugin.tar.gz
           tag_name: v${{ github.ref_name }}
+          make_latest: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
