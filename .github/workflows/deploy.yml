@@ -74,11 +74,14 @@ jobs:
           name: obsidian-rag-plugin
           path: frontend/dist
 
+      - name: Add SHORT_SHA env property with commit short sha
+        run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+
       - name: Release on GitHub
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: >-
-          gh release create ${{ github.sha }}
+          gh release create ${SHORT_SHA}
           frontend/dist/*
           --generate-notes
-          --title "Obsidian Rag Plugin #${{ github.sha }}"
+          --title "Obsidian Rag Plugin #${SHORT_SHA}"
