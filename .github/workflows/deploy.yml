@@ -6,7 +6,37 @@ on:
       - main
 
 jobs:
+  init:
+    runs-on: ubuntu-latest
+    name: Check changed files
+    outputs:
+      backend: ${{ steps.check_files.outputs.backend }}
+      frontend: ${{ steps.check_files.outputs.frontend }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - name: check modified files
+        id: check_files
+        run: |
+            git diff --name-only HEAD^ HEAD > files.txt
+            while IFS= read -r file; do
+              echo $file
+              if [[ $file == frontend/* ]]; then
+                echo "frontend service will be rebuilt"
+                echo "::set-output name=frontend::true"
+              elif [[ $file == backend/* ]]; then
+                echo "backend service will be rebuilt"
+                echo "::set-output name=backend::true"
+              else
+                echo "file does not belong to any service"
+              fi
+            done < files.txt
+
   check-backend:
+    needs: [init]
+    if: needs.init.outputs.backend == 'true'
     name: Lint backend code
     runs-on: ubuntu-latest
     steps:
@@ -33,6 +63,8 @@ jobs:
           find -type f -name '*.py' ! -path '*/migrations/*' -exec autopep8 --in-place --aggressive --aggressive '{}' \;
 
   check-frontend:
+    needs: [init]
+    if: needs.init.outputs.frontend == 'true'
     name: Lint frontend code
     runs-on: ubuntu-latest
     steps:
