@@ -1,29 +1,39 @@
+import { TFile } from "obsidian"
 import React, { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 
 import { IObsidianApp } from "../common/types"
 
 import { App } from "./App"
+import { WebWrapper } from "./WebWrapper"
+import mockData from "./mock/validation.json"
 
 const mockObsidianApp: Partial<IObsidianApp> = {
     vault: {
-        read() {
-            return "Lorem ipsum dolor sit"
+        read(file: TFile) {
+            const fileId = file.name as unknown as number
+
+            return new Promise((resolve) => {
+                const file = mockData.find(({ id }) => id === fileId)
+
+                resolve(file?.Answer || "")
+            })
         },
         getName() {
             return "web-vault"
         },
         getMarkdownFiles() {
-            return [{
-                basename: "/sample-vault/notes/january/01.md",
-                name: "01.md"
-            }]
+            return mockData.map(({ id }) => ({
+                name: id
+            }))
         }
     }
 }
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
-        <App obsidianApp={mockObsidianApp as IObsidianApp} />
+        <WebWrapper>
+            <App obsidianApp={mockObsidianApp as IObsidianApp} />
+        </WebWrapper>
     </StrictMode>
 )

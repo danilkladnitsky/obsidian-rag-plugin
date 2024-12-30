@@ -33,8 +33,8 @@ export const QueryPage = () => {
                     </Text>
                 </Box>
             )}
-            {suggestions.length > 0 && <Text variant="subheader-2">Источники:</Text>}
-            <Box className="query-list">
+            {/* {suggestions.length > 0 && <Text variant="subheader-2">Источники:</Text>} */}
+            <Box style={{ display: "none" }} className="query-list">
                 {
                     isLoading
                         ? (
