@@ -4,6 +4,7 @@
 https://llm-course-2024.kladnitsky.ru/
 
 ## Obsidian Plugin
+https://github.com/danilkladnitsky/obsidian-rag-plugin/releases
 
 ## Интерфейс
 ![Синхронизация](static/ui-1.png)
