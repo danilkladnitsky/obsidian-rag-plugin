@@ -67,6 +67,7 @@ jobs:
           npm run build
 
           cp manifest.json dist/manifest.json
+          tar -cvf obsidian-rag-plugin.tar.gz dist/manifest.json dist/main.js dist/styles.css
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
@@ -82,6 +83,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: >-
           gh release create ${SHORT_SHA}
-          frontend/dist/*
+          obsidian-rag-plugin.tar.gz
           --generate-notes
           --title "Obsidian Rag Plugin #${SHORT_SHA}"
