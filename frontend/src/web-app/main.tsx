@@ -23,8 +23,20 @@ const mockObsidianApp: Partial<IObsidianApp> = {
             return "web-vault"
         },
         getMarkdownFiles() {
-            return mockData.map(({ id }) => ({
-                name: id
+            return mockData.map(({ id, Answer }) => ({
+                name: id,
+                basename: `${id}.md`,
+                extension: ".md",
+                parent: null,
+                path: `${id}.md`,
+                stat: {
+                    ctime: 0,
+                    mtime: 0,
+                    size: Answer.length
+                },
+                vault: {
+                    getName: () => "web-vault"
+                }
             }))
         }
     }

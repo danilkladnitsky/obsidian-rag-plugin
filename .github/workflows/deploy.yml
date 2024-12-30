@@ -104,7 +104,7 @@ jobs:
         run: docker compose -f docker-compose.yml --env-file .env up --force-recreate -d
 
   compile-plugin:
-    needs: [build-service]
+    needs: [check-frontend]
     name: Compile plugin
     runs-on: ubuntu-latest
     permissions:
