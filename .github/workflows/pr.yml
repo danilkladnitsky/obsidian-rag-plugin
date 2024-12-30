@@ -1,0 +1,33 @@
+name: Deploy App
+
+on:
+  pull_request:
+
+jobs:
+  check-backend:
+    name: Lint backend code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: autopep8
+        uses: peter-evans/autopep8@v2
+        with:
+          args: --recursive --in-place --aggressive --aggressive .
+
+  check-frontend:
+    name: Lint frontend code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+
+      - name: Install dependencies
+        run: cd frontend && npm install --legacy-peer-deps
+
+      - name: Lint code
+        run: cd frontend && npm run lint
