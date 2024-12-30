@@ -33,13 +33,13 @@ export class UIModal extends Modal {
 }
 
 export default class MyPlugin extends Plugin {
-    async onload() {
+    async onload() {  
         // This creates an icon in the left ribbon.
-        const ribbonIconEl = this.addRibbonIcon("brain", "Obsidian Rag Plugin", () => {
+           const ribbonIconEl =  this.addRibbonIcon("brain", "Obsidian Rag Plugin", () => {
             // Called when the user clicks the icon.
-            new UIModal(this.app, RenderAppFn).open()
+                new UIModal(this.app, RenderAppFn).open()
         })
         // Perform additional things with the ribbon
         ribbonIconEl.addClass("my-plugin-ribbon-class")
     }
-}
+}                   
