@@ -2,7 +2,7 @@ import { QueryRequest, UserNote } from "web-app/domain"
 
 const getProd = () => {
     try {
-        return import.meta.env.PROD
+        return import.meta.env.PROD || true
     }
     catch (err) {
         console.error(err)
