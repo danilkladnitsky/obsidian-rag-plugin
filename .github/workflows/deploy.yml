@@ -64,17 +64,15 @@ jobs:
           cd frontend
           npm run build
 
-          mkdir -p obsidian_plugin
-          cp -r dist/* obsidian_plugin
-          cp manifest.json obsidian_plugin
+          cp manifest.json frontend/dist/manifest.json
 
-          tar -zcvf obsidian_plugin.tar.gz obsidian_plugin
+          tar -zcvf obsidian_plugin.tar.gz frontend/dist
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: obsidian-rag-plugin
-          path: obsidian_plugin
+          path: obsidian_plugin.tar.gz
 
       - name: Release Obsidian plugin
         uses: softprops/action-gh-release@v1
