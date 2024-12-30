@@ -27,6 +27,7 @@
     padding: 16px;
     border: 1px solid gray;
     border-radius: 8px;
+    width: 600px;
     min-width: 400px;
 }
 
@@ -39,7 +40,8 @@
 
 .web-table {
     max-height: 400px;
-    max-width: 100%;
+
+    width: 600px;
     min-width: 400px;
 
     overflow: scroll;
