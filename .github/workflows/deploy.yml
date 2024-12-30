@@ -63,12 +63,20 @@ jobs:
         run: |
           cd frontend
           npm run build
-          mkdir -p dist/obsidian-rag-plugin
-          cp manifest.json dist/obsidian-rag-plugin/manifest.json
-          cp dist/main.js dist/obsidian-rag-plugin/main.js
+          mkdir -p dist/plugin/obsidian-rag-plugin
+          cp manifest.json dist/plugin/obsidian-rag-plugin/manifest.json
+          cp dist/main.js dist/plugin/obsidian-rag-plugin/main.js
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: obsidian-plugin
-          path: frontend/dist
+          name: obsidian-rag-plugin
+          path: frontend/plugin
+          
+      - name: Release Obsidian plugin
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            frontend/plugin/obsidian-rag-plugin.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
