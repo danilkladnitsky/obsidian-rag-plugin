@@ -64,7 +64,9 @@ jobs:
           cd frontend
           npm run build
 
-          cp manifest.json frontend/dist/manifest.json
+          ls
+
+          cp manifest.json frontend/dist
 
           tar -zcvf obsidian_plugin.tar.gz frontend/dist
 
