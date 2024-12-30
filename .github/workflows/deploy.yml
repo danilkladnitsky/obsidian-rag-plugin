@@ -10,13 +10,27 @@ jobs:
     name: Lint backend code
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Check out the repository
         uses: actions/checkout@v3
 
-      - name: autopep8
-        uses: peter-evans/autopep8@v2
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          args: --recursive --in-place --aggressive --aggressive .
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 autopep8
+
+      - name: Run Flake8
+        run: |
+          flake8 --max-line-length=120 backend/
+
+      - name: Run PEP 8 Compliance Check
+        run: |
+          cd backend
+          find -type f -name '*.py' ! -path '*/migrations/*' -exec autopep8 --in-place --aggressive --aggressive '{}' \;
 
   check-frontend:
     name: Lint frontend code
