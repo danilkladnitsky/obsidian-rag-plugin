@@ -72,11 +72,12 @@ jobs:
         with:
           name: obsidian-rag-plugin
           path: frontend/plugin
-          
+
       - name: Release Obsidian plugin
         uses: softprops/action-gh-release@v1
         with:
           files: |
             frontend/plugin/obsidian-rag-plugin.zip
+          tag_name: v${{ github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
