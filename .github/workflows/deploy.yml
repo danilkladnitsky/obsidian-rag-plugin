@@ -63,7 +63,9 @@ jobs:
         run: |
           cd frontend
           npm run build
-          cp manifest.json dist/manifest.json
+          mkdir -p frontend/obsidian-rag-plugin
+          cp manifest.json frontend/obsidian-rag-plugin/manifest.json
+          cp main.js frontend/obsidian-rag-plugin/main.js
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
