@@ -5,6 +5,13 @@ https://llm-course-2024.kladnitsky.ru/
 
 ## Obsidian Plugin
 
+## Интерфейс
+![Синхронизация](static/ui-1.png)
+
+![Запрос к RAG](static/ui-2.png)
+
+![Выдача](static/ui-3.png)
+
 ## Как запустить
 ### AI Tunnel
 https://aitunnel.ru/#models
