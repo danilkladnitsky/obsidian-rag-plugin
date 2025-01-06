@@ -12,7 +12,3 @@ if __name__ == "__main__":
         host=config["server"]["host"],
         port=config["server"]["port"],
     )
-
-
-# HOW TO RUN
-# python3 backend/main.py

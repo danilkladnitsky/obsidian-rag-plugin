@@ -36,7 +36,7 @@ jobs:
 
   check-backend:
     needs: [init]
-    if: needs.init.outputs.backend == 'true'
+    # if: needs.init.outputs.backend == 'true'
     name: Lint backend code
     runs-on: ubuntu-latest
     steps:
@@ -64,7 +64,7 @@ jobs:
 
   check-frontend:
     needs: [init]
-    if: needs.init.outputs.frontend == 'true'
+    # if: needs.init.outputs.frontend == 'true'
     name: Lint frontend code
     runs-on: ubuntu-latest
     steps:
