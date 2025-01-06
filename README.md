@@ -1,7 +1,7 @@
 # Obsidian RAG Plugin (TBD Team)
 
 ## Demo Web App
-https://llm-course-2024.kladnitsky.ru/
+https://llm-course.kladnitsky.ru/
 
 ## Obsidian Plugin
 https://github.com/danilkladnitsky/obsidian-rag-plugin/releases
