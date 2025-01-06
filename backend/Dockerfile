@@ -7,4 +7,6 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
+ENV LLM_API_KEY=$LLM_API_KEY
+
 EXPOSE 8000
