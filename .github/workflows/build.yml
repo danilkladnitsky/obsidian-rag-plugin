@@ -121,7 +121,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [check-backend]
     env:
-      frontend: ${{secrets.DOCKERHUB_USERNAME}}/llm-course-2024.backend
+      backend: ${{secrets.DOCKERHUB_USERNAME}}/llm-course-2024.backend
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
