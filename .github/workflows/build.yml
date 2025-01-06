@@ -1,0 +1,195 @@
+name: Build Docker images
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  init:
+    runs-on: ubuntu-latest
+    name: Check changed files
+    outputs:
+      backend: ${{ steps.check_files.outputs.backend }}
+      frontend: ${{ steps.check_files.outputs.frontend }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - name: check modified files
+        id: check_files
+        run: |
+            git diff --name-only HEAD^ HEAD > files.txt
+            while IFS= read -r file; do
+              echo $file
+              if [[ $file == frontend/* ]]; then
+                echo "frontend service will be rebuilt"
+                echo "::set-output name=frontend::true"
+              elif [[ $file == backend/* ]]; then
+                echo "backend service will be rebuilt"
+                echo "::set-output name=backend::true"
+              else
+                echo "file does not belong to any service"
+              fi
+            done < files.txt
+
+  check-backend:
+    needs: [init]
+    if: needs.init.outputs.backend == 'true'
+    name: Lint backend code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 autopep8
+
+      - name: Run Flake8
+        run: |
+          flake8 --max-line-length=120 backend/
+
+      - name: Run PEP 8 Compliance Check
+        run: |
+          cd backend
+          find -type f -name '*.py' ! -path '*/migrations/*' -exec autopep8 --in-place --aggressive --aggressive '{}' \;
+
+  check-frontend:
+    needs: [init]
+    if: needs.init.outputs.frontend == 'true'
+    name: Lint frontend code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+
+      - name: Install dependencies
+        run: cd frontend && npm install --legacy-peer-deps
+
+      - name: Lint code
+        run: cd frontend && npm run lint
+
+  build-frontend:
+    name: Build and publish frontend to Docker Registry
+    runs-on: ubuntu-latest
+    needs: [check-frontend]
+    env:
+      frontend: ${{secrets.DOCKERHUB_USERNAME}}/llm-course-2024.frontend
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{secrets.DOCKERHUB_USERNAME}}
+          password: ${{secrets.DOCKERHUB_TOKEN}}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Add SHORT_SHA
+        run: |
+          echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+
+      - name: Push frontend image
+        uses: docker/build-push-action@v4
+        with:
+          context: frontend
+          push: true
+          tags: ${{env.frontend}}:latest
+          cache-from: type=registry,ref=${{env.frontend}}:latest
+          cache-to: type=inline
+          platforms: linux/x86_64
+
+  build-backend:
+    name: Build and publish backend to Docker Registry
+    runs-on: ubuntu-latest
+    needs: [check-backend]
+    env:
+      frontend: ${{secrets.DOCKERHUB_USERNAME}}/llm-course-2024.backend
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{secrets.DOCKERHUB_USERNAME}}
+          password: ${{secrets.DOCKERHUB_TOKEN}}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Add SHORT_SHA
+        run: |
+          echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+
+      - name: Push backend image
+        uses: docker/build-push-action@v4
+        with:
+          context: backend
+          push: true
+          tags: ${{env.backend}}:latest
+          cache-from: type=registry,ref=${{env.frontend}}:latest
+          cache-to: type=inline
+          platforms: linux/x86_64
+
+  compile-plugin:
+    needs: [check-frontend]
+    name: Compile plugin
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+
+      - name: Install dependencies
+        run: cd frontend && npm install --legacy-peer-deps
+
+      - name: Compile Obsidian plugin
+        run: |
+          cd frontend
+          npm run build
+
+          cp manifest.json dist/manifest.json
+          tar -cvf obsidian-rag-plugin.tar.gz dist/manifest.json dist/main.js
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: obsidian-rag-plugin
+          path: frontend/obsidian-rag-plugin.tar.gz
+
+      - name: Add SHORT_SHA env property with commit short sha
+        run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+
+      - name: Release on GitHub
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: >-
+          gh release create ${SHORT_SHA}
+          frontend/obsidian-rag-plugin.tar.gz
+          --generate-notes
+          --title "Obsidian Rag Plugin #${SHORT_SHA}"
