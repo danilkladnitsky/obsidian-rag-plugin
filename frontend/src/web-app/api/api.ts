@@ -10,7 +10,7 @@ const getProd = () => {
     }
 }
 
-const BACKEND_URL = getProd() ? "/api" : "http://0.0.0.0:8000"
+const BACKEND_URL = getProd() ? "https://llm-course-api.kladnitsky.ru" : "http://0.0.0.0:8000"
 
 const wait = (ms: number): Promise<void> => new Promise(r => setTimeout(r, ms))
 
