@@ -24,3 +24,8 @@
 .skeleton {
     height: 62px;
 }
+
+.questionAnswer {
+    max-height: 120px;
+    overflow-y: auto;
+}

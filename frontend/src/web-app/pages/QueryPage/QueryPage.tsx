@@ -26,7 +26,7 @@ export const QueryPage = () => {
                 <Button disabled={!question} width="max" size="l" loading={isLoading} onClick={handleQuery}>Отправить</Button>
             </Box>
             {questionAnswer && (
-                <Box>
+                <Box className="questionAnswer">
                     <Text variant="subheader-2">Ответ: </Text>
                     <Text variant="body-2">
                         {questionAnswer}
