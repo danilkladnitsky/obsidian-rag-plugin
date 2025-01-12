@@ -29,21 +29,16 @@ docker compose -f docker-compose.yml --env-file .env up --build
 4. Фронтенд будет запущен на 82 порту, бэкенд - на 8000
 
 ### OpenAI
-1. Подготовьте API-токен от OpenAI
-2. В файле `backend/src/llm.py` закомментируйте строчку
-```python
-class LLM:
-    def __init__(self, config):
-        # ...
-        self.llm_client = OpenAI(
-            # base_url=config["llm"]["base_url"],
-            api_key=os.environ[config["llm"]["api_key"]],
-        )
-    
-    # ...
-
-```
+1. Подготовьте API-токен от OpenAI и положите его в переменную ```LLM_API_KEY```
 3. Следуйте шагам 2-4 в кейсе с AI Tunnel
+
+
+## Метрики
+| dataset | context_precision | faithfulness  | answer_relevancy   | context_recall |
+|--------|-------------------|---|----|----------------|
+| hmao_npa | 0.7516,           | 0.7393  |  0.6624   | 0.8526         |
+
+
 
 ## Авторы
 Данил Кладницкий (tg: @danilkladnitsky)
