@@ -19,7 +19,7 @@ def get_app(config):
         allow_headers=["*"],
     )
 
-    @app.post("/user-notes")
+    @app.post("/api/user-notes")
     async def add_user_notes(input_data: UserNotesInput):
         try:
             user_notes_store.add_documents(input_data.user_id, input_data.documents)
@@ -29,7 +29,7 @@ def get_app(config):
                 status_code=500, detail=f"Ошибка при добавлении документов: {str(e)}"
             )
 
-    @app.post("/user-notes/suggestion")
+    @app.post("/api/user-notes/suggestion")
     async def get_user_notes_suggestions(input_data: UserQueryInput):
         try:
             docs = user_notes_store.retrieve_chunks(
@@ -46,7 +46,7 @@ def get_app(config):
                 status_code=500, detail=f"Ошибка при извлечении чанков: {str(e)}"
             )
 
-    @app.get("/ping")
+    @app.get("/api/ping")
     async def ping():
         return "pong"
 
