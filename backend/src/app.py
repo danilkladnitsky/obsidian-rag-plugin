@@ -19,6 +19,10 @@ def get_app(config):
         allow_headers=["*"],
     )
 
+    @app.get("/api/ping")
+    async def ping():
+        return "pong"
+
     @app.post("/api/user-notes")
     async def add_user_notes(input_data: UserNotesInput):
         try:
@@ -45,9 +49,5 @@ def get_app(config):
             raise HTTPException(
                 status_code=500, detail=f"Ошибка при извлечении чанков: {str(e)}"
             )
-
-    @app.get("/api/ping")
-    async def ping():
-        return "pong"
 
     return app
