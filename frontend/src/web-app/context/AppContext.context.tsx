@@ -30,7 +30,7 @@ export const AppContextProvider = ({ children, obsidianApp, api }: AppContextPro
         setSuggestions([])
         const { suggestions, llm_output } = await api.query({ question, user_id: obsidianApp.vault.getName() })
         setSuggestions(suggestions)
-        setQuestionAnswer(llm_output)
+        setQuestionAnswer(llm_output || suggestions[0])
     }
 
     const saveNotes = async (notes: UserNote[]) => {
