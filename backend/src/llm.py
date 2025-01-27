@@ -30,6 +30,7 @@ class LLM:
     def get_output(self, chunks: List[str], query: str) -> str:
         try:
             prompt = self.build_prompt(chunks, query)
+            print(prompt)
             response = self.llm_client.chat.completions.create(
                 model=self.model,
                 messages=[
@@ -41,6 +42,8 @@ class LLM:
                 max_tokens=self.max_tokens,
                 stream=True,
             )
+
+            print(response)
 
             generated_response = ""
             for chunk in response:
