@@ -44,14 +44,14 @@ class LLM:
             )
 
             print(response)
+            return response.choices[0].message.content
+            # generated_response = ""
+            # for chunk in response:
+            #     if chunk.choices[0].delta.content is not None:
+            #         generated_response += chunk.choices[0].delta.content
 
-            generated_response = ""
-            for chunk in response:
-                if chunk.choices[0].delta.content is not None:
-                    generated_response += chunk.choices[0].delta.content
-
-            logger.info(f"Generated response: {generated_response[:30]}...")
-            return generated_response
+            # logger.info(f"Generated response: {generated_response[:30]}...")
+            # return generated_response
         except Exception as e:
             logger.error(f"Error generating response: {e}")
             return ""
